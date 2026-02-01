@@ -1,1 +1,59 @@
 @import "tailwindcss";
+
+/* Enable class-based dark mode */
+@custom-variant dark (&:where(.dark, .dark *));
+
+@theme {
+    /* Primary colors - Sky Blue palette */
+    --color-primary-50: #f0f9ff;
+    --color-primary-100: #e0f2fe;
+    --color-primary-200: #bae6fd;
+    --color-primary-300: #7dd3fc;
+    --color-primary-400: #38bdf8;
+    --color-primary-500: #0ea5e9;
+    --color-primary-600: #0284c7;
+    --color-primary-700: #0369a1;
+    --color-primary-800: #075985;
+    --color-primary-900: #0c4a6e;
+    --color-primary-950: #082f49;
+
+    /* Dark mode colors */
+    --color-dark-bg: #0a0a0a;
+    --color-dark-surface: #171717;
+    --color-dark-border: #262626;
+
+    /* Font family */
+    --font-sans: 'Outfit', sans-serif;
+
+    /* Animations */
+    --animate-fade-in: fade-in 0.5s ease-out forwards;
+    --animate-slide-up: slide-up 0.5s ease-out forwards;
+
+    @keyframes fade-in {
+        from {
+            opacity: 0;
+        }
+
+        to {
+            opacity: 1;
+        }
+    }
+
+    @keyframes slide-up {
+        from {
+            opacity: 0;
+            transform: translateY(20px);
+        }
+
+        to {
+            opacity: 1;
+            transform: translateY(0);
+        }
+    }
+}
+
+/* Ensure gradient text works properly */
+.bg-clip-text {
+    -webkit-background-clip: text;
+    background-clip: text;
+}

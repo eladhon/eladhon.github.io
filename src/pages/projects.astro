@@ -1,0 +1,33 @@
+---
+import Layout from "../layouts/Layout.astro";
+import ProjectCard from "../components/ProjectCard.astro";
+import { projects } from "../data/projects";
+---
+
+<Layout title="All Projects | Eldho Eapen">
+    <main class="mx-auto max-w-5xl px-6 pb-20 pt-32">
+        <div class="mb-12">
+            <a
+                href="/"
+                class="inline-flex items-center gap-2 text-primary-600 dark:text-primary-400 hover:text-primary-800 dark:hover:text-primary-300 font-medium transition-colors mb-6 group"
+            >
+                <i
+                    class="fa-solid fa-arrow-left group-hover:-translate-x-1 transition-transform"
+                ></i>
+                Back to Home
+            </a>
+            <h1
+                class="text-4xl md:text-5xl font-bold text-gray-900 dark:text-white mb-4"
+            >
+                All Projects
+            </h1>
+            <p class="text-gray-600 dark:text-gray-400 text-lg">
+                A big list of things I've worked on.
+            </p>
+        </div>
+
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+            {projects.map((project) => <ProjectCard project={project} />)}
+        </div>
+    </main>
+</Layout>

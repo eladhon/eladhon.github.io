@@ -1,0 +1,63 @@
+---
+// This component isn't required now because I am a fresher
+const experiences = [
+    {
+        role: "Role of Experience",
+        company: "Company Name",
+        period: "Year of experience",
+        maps: "Location of Company",
+        description: "Description of company",
+    },
+    {
+        role: "...",
+        company: "...",
+        period: "...",
+        maps: "...",
+        description: "...",
+    },
+];
+---
+
+<section id="experience" class="py-20">
+    <div class="flex items-center justify-between mb-12">
+        <h2
+            class="text-3xl font-bold text-gray-900 dark:text-white flex items-center gap-3"
+        >
+            <span class="text-primary-600 dark:text-primary-400">03.</span> Experience
+        </h2>
+        <div
+            class="h-px bg-gray-200 dark:bg-dark-border flex-1 ml-6 hidden sm:block opacity-50"
+        >
+        </div>
+    </div>
+
+    <div
+        class="space-y-8 relative before:absolute before:inset-0 before:left-2 before:h-full before:w-0.5 before:bg-gradient-to-b before:from-primary-500 before:to-transparent"
+    >
+        {
+            experiences.map((exp) => (
+                <div class="relative pl-8 md:pl-12 group">
+                    <a href={exp.maps}>
+                        <div class="absolute left-[3px] top-2 w-3 h-3 rounded-full bg-primary-500 ring-4 ring-white dark:ring-dark-bg transition-transform group-hover:scale-125" />
+                        <div class="bg-white dark:bg-dark-surface/50 border border-gray-200 dark:border-dark-border rounded-xl p-6 hover:border-primary-500/50 transition-colors shadow-sm dark:shadow-none">
+                            <div class="flex flex-col md:flex-row md:items-center md:justify-between mb-2 gap-1">
+                                <h3 class="text-xl font-bold text-gray-900 dark:text-white">
+                                    {exp.role}
+                                </h3>
+                                <span class="text-sm font-medium text-primary-600 dark:text-primary-400 bg-primary-50 dark:bg-primary-500/10 px-3 py-1 rounded-full w-fit">
+                                    {exp.period}
+                                </span>
+                            </div>
+                            <p class="text-lg font-medium text-gray-700 dark:text-gray-300 mb-4">
+                                {exp.company}
+                            </p>
+                            <p class="text-gray-600 dark:text-gray-400 leading-relaxed text-sm">
+                                {exp.description}
+                            </p>
+                        </div>
+                    </a>
+                </div>
+            ))
+        }
+    </div>
+</section>
