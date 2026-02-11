@@ -1,5 +1,5 @@
 ---
-import profileImage from "../assets/profile.png";
+import profileImage from "../assets/profile.jpeg";
 import { Image } from "astro:assets";
 ---
 
@@ -12,36 +12,40 @@ import { Image } from "astro:assets";
         <h1
             class="text-4xl md:text-6xl font-bold tracking-tight text-gray-900 dark:text-white leading-tight"
         >
-            Hi, I'm <span class="inline-flex gap-2">
-                <span class="relative group cursor-pointer">
+            Hi, I'm <span
+                class="inline-flex gap-2 flex-wrap justify-center md:justify-start"
+            >
+                <span class="relative group cursor-pointer" id="eldho-wrapper">
                     <button
                         id="pronounce-eldho"
-                        class="absolute left-1/2 -translate-x-1/2 -top-10 px-3 py-1.5 rounded-full bg-white/90 dark:bg-dark-surface/90 backdrop-blur-sm border border-gray-200 dark:border-dark-border shadow-lg text-sm font-medium text-gray-600 dark:text-gray-300 opacity-0 group-hover:opacity-100 transition-all duration-300 translate-y-2 group-hover:translate-y-0 flex items-center gap-2 hover:text-primary-600 dark:hover:text-primary-400 hover:border-primary-500/50 whitespace-nowrap z-50"
+                        class="absolute left-1/2 -translate-x-1/2 -top-8 md:-top-10 px-4 py-2 md:px-3 md:py-1.5 rounded-full bg-white/95 dark:bg-dark-surface/95 backdrop-blur-sm border border-gray-200 dark:border-dark-border shadow-xl text-sm font-medium text-gray-600 dark:text-gray-300 opacity-0 md:group-hover:opacity-100 transition-all duration-300 translate-y-4 md:group-hover:translate-y-0 flex items-center gap-2 hover:text-primary-600 dark:hover:text-primary-400 hover:border-primary-500/50 whitespace-nowrap z-50 pointer-events-none md:pointer-events-auto touch-manipulation"
                         aria-label="Play pronunciation for Eldho"
                     >
-                        /el-dho/
+                        /EL-dho/
                         <i
                             class="fa-solid fa-volume-high text-xs bg-transparent"
                         ></i>
                     </button>
                     <span
-                        class="text-transparent bg-clip-text bg-gradient-to-r from-primary-600 to-primary-700 dark:from-primary-400 dark:to-primary-500 transition-transform duration-300 group-hover:-translate-y-1 inline-block"
+                        id="eldho-text"
+                        class="text-transparent bg-clip-text bg-gradient-to-r from-primary-600 to-primary-700 dark:from-primary-400 dark:to-primary-500 transition-transform duration-300 group-hover:-translate-y-1 inline-block py-1"
                         >Eldho</span
                     >
                 </span>
-                <span class="relative group cursor-pointer">
+                <span class="relative group cursor-pointer" id="eapen-wrapper">
                     <button
                         id="pronounce-eapen"
-                        class="absolute left-1/2 -translate-x-1/2 -top-10 px-3 py-1.5 rounded-full bg-white/90 dark:bg-dark-surface/90 backdrop-blur-sm border border-gray-200 dark:border-dark-border shadow-lg text-sm font-medium text-gray-600 dark:text-gray-300 opacity-0 group-hover:opacity-100 transition-all duration-300 translate-y-2 group-hover:translate-y-0 flex items-center gap-2 hover:text-primary-600 dark:hover:text-primary-400 hover:border-primary-500/50 whitespace-nowrap z-50"
+                        class="absolute left-1/2 -translate-x-1/2 -top-8 md:-top-10 px-4 py-2 md:px-3 md:py-1.5 rounded-full bg-white/95 dark:bg-dark-surface/95 backdrop-blur-sm border border-gray-200 dark:border-dark-border shadow-xl text-sm font-medium text-gray-600 dark:text-gray-300 opacity-0 md:group-hover:opacity-100 transition-all duration-300 translate-y-4 md:group-hover:translate-y-0 flex items-center gap-2 hover:text-primary-600 dark:hover:text-primary-400 hover:border-primary-500/50 whitespace-nowrap z-50 pointer-events-none md:pointer-events-auto touch-manipulation"
                         aria-label="Play pronunciation for Eapen"
                     >
-                        /ea-pen/
+                        /EE-pen/
                         <i
                             class="fa-solid fa-volume-high text-xs bg-transparent"
                         ></i>
                     </button>
                     <span
-                        class="text-transparent bg-clip-text bg-gradient-to-r from-primary-600 to-primary-700 dark:from-primary-400 dark:to-primary-500 transition-transform duration-300 group-hover:-translate-y-1 inline-block"
+                        id="eapen-text"
+                        class="text-transparent bg-clip-text bg-gradient-to-r from-primary-600 to-primary-700 dark:from-primary-400 dark:to-primary-500 transition-transform duration-300 group-hover:-translate-y-1 inline-block py-1"
                         >Eapen</span
                     >
                 </span>
@@ -56,19 +60,146 @@ import { Image } from "astro:assets";
                 });
             };
 
-            document
-                .getElementById("pronounce-eldho")
-                ?.addEventListener("click", (e) => {
-                    e.stopPropagation();
-                    playAudio("/eldho.mp3");
+            // Handle Eldho pronunciation
+            const eldhoBtn = document.getElementById("pronounce-eldho");
+            const eldhoText = document.getElementById("eldho-text");
+            const eldhoWrapper = document.getElementById("eldho-wrapper");
+
+            // Handle Eapen pronunciation
+            const eapenBtn = document.getElementById("pronounce-eapen");
+            const eapenText = document.getElementById("eapen-text");
+            const eapenWrapper = document.getElementById("eapen-wrapper");
+
+            // Toggle button visibility and play audio on text click (mobile)
+            eldhoText?.addEventListener("click", (e) => {
+                e.stopPropagation();
+                if (eldhoBtn) {
+                    const isVisible =
+                        eldhoBtn.classList.contains("!opacity-100");
+
+                    // Close other button first
+                    eapenBtn?.classList.remove(
+                        "!opacity-100",
+                        "!translate-y-0",
+                    );
+                    eapenBtn?.classList.remove("pointer-events-auto"); // Disable pointer events when hidden
+
+                    if (isVisible) {
+                        // Hide and play
+                        eldhoBtn.classList.remove(
+                            "!opacity-100",
+                            "!translate-y-0",
+                        );
+                        eldhoBtn.classList.remove("pointer-events-auto"); // Disable pointer events
+                        playAudio("/eldho.mp3");
+                    } else {
+                        // Show
+                        eldhoBtn.classList.add(
+                            "!opacity-100",
+                            "!translate-y-0",
+                        );
+                        eldhoBtn.classList.add("pointer-events-auto"); // Enable pointer events
+                    }
+                }
+            });
+
+            eapenText?.addEventListener("click", (e) => {
+                e.stopPropagation();
+                if (eapenBtn) {
+                    const isVisible =
+                        eapenBtn.classList.contains("!opacity-100");
+
+                    // Close other button first
+                    eldhoBtn?.classList.remove(
+                        "!opacity-100",
+                        "!translate-y-0",
+                    );
+                    eldhoBtn?.classList.remove("pointer-events-auto");
+
+                    if (isVisible) {
+                        // Hide and play
+                        eapenBtn.classList.remove(
+                            "!opacity-100",
+                            "!translate-y-0",
+                        );
+                        eapenBtn.classList.remove("pointer-events-auto");
+                        playAudio("/eapen.mp3");
+                    } else {
+                        // Show
+                        eapenBtn.classList.add(
+                            "!opacity-100",
+                            "!translate-y-0",
+                        );
+                        eapenBtn.classList.add("pointer-events-auto");
+                    }
+                }
+            });
+
+            // Explicit touch handler for buttons to ensure they fire on mobile
+            const handleTouchPlay = (file: string, e: Event) => {
+                e.stopPropagation();
+                e.preventDefault(); // Prevent ghost clicks
+                playAudio(file);
+            };
+
+            eldhoBtn?.addEventListener("touchstart", (e) =>
+                handleTouchPlay("/eldho.mp3", e),
+            );
+            eapenBtn?.addEventListener("touchstart", (e) =>
+                handleTouchPlay("/eapen.mp3", e),
+            );
+
+            // Play audio on button click (desktop hover)
+            eldhoBtn?.addEventListener("click", (e) => {
+                e.stopPropagation();
+                playAudio("/eldho.mp3");
+            });
+
+            eapenBtn?.addEventListener("click", (e) => {
+                e.stopPropagation();
+                playAudio("/eapen.mp3");
+            });
+
+            // Hide buttons when clicking outside
+            document.addEventListener("click", () => {
+                eldhoBtn?.classList.remove("!opacity-100", "!translate-y-0");
+                eapenBtn?.classList.remove("!opacity-100", "!translate-y-0");
+            });
+
+            // Hero Image Dynamic Radius
+            const heroWrapper = document.getElementById("hero-wrapper");
+            const heroBg = document.getElementById("hero-bg");
+            const heroImg = document.getElementById("hero-img");
+
+            if (heroWrapper && heroBg && heroImg) {
+                document.addEventListener("mousemove", (e) => {
+                    const rect = heroWrapper.getBoundingClientRect();
+                    const x = e.clientX - rect.left;
+                    const y = e.clientY - rect.top;
+
+                    // Check if mouse is near the hero image (optional optimization, but global is fine for "follows mouse")
+                    // We'll calculate a subtle morph based on screen position or relative position
+
+                    // Calculate percentage position within the wrapper
+                    const xP = Math.min(Math.max(x / rect.width, 0), 1);
+                    const yP = Math.min(Math.max(y / rect.height, 0), 1);
+
+                    // Morph logic: squircle-ish but responding to mouse
+                    // Base 30% border radius, morphing up to 50%
+                    const left = 30 + xP * 40; // 30-70
+                    const right = 70 - xP * 40; // 70-30
+                    const top = 30 + yP * 40;
+                    const bottom = 70 - yP * 40;
+
+                    // Create a blobby rounded square shape
+                    const radius = `${left}% ${right}% ${right}% ${left}% / ${top}% ${top}% ${bottom}% ${bottom}%`;
+
+                    heroBg.style.borderRadius = radius;
+                    heroImg.style.borderRadius = radius;
                 });
 
-            document
-                .getElementById("pronounce-eapen")
-                ?.addEventListener("click", (e) => {
-                    e.stopPropagation();
-                    playAudio("/eapen.mp3");
-                });
+                // Reset on mouse leave? Or keep last position. Keep flows better.
+            }
         </script>
         <h2
             class="text-2xl md:text-3xl font-medium text-gray-600 dark:text-gray-400"
@@ -125,11 +256,12 @@ import { Image } from "astro:assets";
             <!-- Primary CTA: Resume Download -->
             <a
                 href="/resume.pdf"
-                download
+                target="_blank"
+                rel="noopener noreferrer"
                 class="px-6 py-3 rounded-full bg-primary-600 hover:bg-primary-500 text-white font-medium transition-all shadow-lg shadow-primary-500/25 flex items-center gap-2 transform hover:-translate-y-1"
             >
-                <i class="fa-solid fa-download"></i>
-                Download Resume
+                <i class="fa-solid fa-file"></i>
+                View My Resume
             </a>
             <!-- Secondary CTA: View Projects -->
             <a
@@ -150,7 +282,7 @@ import { Image } from "astro:assets";
                 href="https://github.com/eladhon"
                 target="_blank"
                 rel="noopener noreferrer"
-                class="p-3 rounded-full bg-gray-100 dark:bg-dark-surface border border-gray-200 dark:border-dark-border text-gray-600 dark:text-gray-400 hover:text-primary-600 dark:hover:text-primary-400 hover:border-primary-500/50 transition-all hover:-translate-y-1"
+                class="w-12 h-12 flex items-center justify-center rounded-full bg-gray-100 dark:bg-dark-surface border border-gray-200 dark:border-dark-border text-gray-600 dark:text-gray-400 hover:text-primary-600 dark:hover:text-primary-400 hover:border-primary-500/50 transition-all hover:-translate-y-1"
                 aria-label="GitHub"
             >
                 <i class="fa-brands fa-github text-xl"></i>
@@ -159,16 +291,34 @@ import { Image } from "astro:assets";
                 href="https://linkedin.com/in/eldhoeapen"
                 target="_blank"
                 rel="noopener noreferrer"
-                class="p-3 rounded-full bg-gray-100 dark:bg-dark-surface border border-gray-200 dark:border-dark-border text-gray-600 dark:text-gray-400 hover:text-primary-600 dark:hover:text-primary-400 hover:border-primary-500/50 transition-all hover:-translate-y-1"
+                class="w-12 h-12 flex items-center justify-center rounded-full bg-gray-100 dark:bg-dark-surface border border-gray-200 dark:border-dark-border text-gray-600 dark:text-gray-400 hover:text-primary-600 dark:hover:text-primary-400 hover:border-primary-500/50 transition-all hover:-translate-y-1"
                 aria-label="LinkedIn"
             >
                 <i class="fa-brands fa-linkedin text-xl"></i>
             </a>
             <a
+                href="https://instagram.com/ela.dhon/"
+                target="_blank"
+                rel="noopener noreferrer"
+                class="w-12 h-12 flex items-center justify-center rounded-full bg-gray-100 dark:bg-dark-surface border border-gray-200 dark:border-dark-border text-gray-600 dark:text-gray-400 hover:text-primary-600 dark:hover:text-primary-400 hover:border-primary-500/50 transition-all hover:-translate-y-1"
+                aria-label="Instagram"
+            >
+                <i class="fa-brands fa-instagram text-xl"></i>
+            </a>
+            <a
+                href="https://threads.com/@ela.dhon"
+                target="_blank"
+                rel="noopener noreferrer"
+                class="w-12 h-12 flex items-center justify-center rounded-full bg-gray-100 dark:bg-dark-surface border border-gray-200 dark:border-dark-border text-gray-600 dark:text-gray-400 hover:text-primary-600 dark:hover:text-primary-400 hover:border-primary-500/50 transition-all hover:-translate-y-1"
+                aria-label="Threads"
+            >
+                <i class="fa-brands fa-threads text-xl"></i>
+            </a>
+            <a
                 href="https://twitter.com/eladhon"
                 target="_blank"
                 rel="noopener noreferrer"
-                class="p-3 rounded-full bg-gray-100 dark:bg-dark-surface border border-gray-200 dark:border-dark-border text-gray-600 dark:text-gray-400 hover:text-primary-600 dark:hover:text-primary-400 hover:border-primary-500/50 transition-all hover:-translate-y-1"
+                class="w-12 h-12 flex items-center justify-center rounded-full bg-gray-100 dark:bg-dark-surface border border-gray-200 dark:border-dark-border text-gray-600 dark:text-gray-400 hover:text-primary-600 dark:hover:text-primary-400 hover:border-primary-500/50 transition-all hover:-translate-y-1"
                 aria-label="Twitter"
             >
                 <i class="fa-brands fa-x-twitter text-xl"></i>
@@ -176,7 +326,7 @@ import { Image } from "astro:assets";
             <!-- 
             <a
                 href="mailto:eldho@example.com"
-                class="p-3 rounded-full bg-gray-100 dark:bg-dark-surface border border-gray-200 dark:border-dark-border text-gray-600 dark:text-gray-400 hover:text-primary-600 dark:hover:text-primary-400 hover:border-primary-500/50 transition-all hover:-translate-y-1"
+                class="w-12 h-12 flex items-center justify-center rounded-full bg-gray-100 dark:bg-dark-surface border border-gray-200 dark:border-dark-border text-gray-600 dark:text-gray-400 hover:text-primary-600 dark:hover:text-primary-400 hover:border-primary-500/50 transition-all hover:-translate-y-1"
                 aria-label="Email"
             >
                 <i class="fa-solid fa-envelope text-xl"></i>
@@ -187,18 +337,23 @@ import { Image } from "astro:assets";
 
     <!-- Image Column (Moved to Right) -->
     <div
-        class="relative w-72 h-72 md:w-[32rem] md:h-[32rem] shrink-0 animate-fade-in group flex items-center justify-center"
+        id="hero-wrapper"
+        class="relative w-72 h-72 md:w-lg md:h-128 shrink-0 animate-fade-in group flex items-center justify-center"
         style="animation-delay: 200ms;"
     >
         <div
-            class="absolute inset-0 rounded-3xl bg-white/30 dark:bg-white/5 backdrop-blur-xl border border-white/20 dark:border-white/10 shadow-2xl transition-all duration-500 group-hover:bg-white/40 dark:group-hover:bg-white/10"
-            style="-webkit-mask-image: linear-gradient(to right, transparent, black); mask-image: linear-gradient(to right, transparent, black);"
+            id="hero-bg"
+            class="absolute inset-0 bg-white/30 dark:bg-white/5 backdrop-blur-xl border border-white/20 dark:border-white/10 shadow-2xl transition-all duration-500 group-hover:bg-white/40 dark:group-hover:bg-white/10"
+            style="border-radius: 30% 70% 70% 30% / 30% 30% 70% 70%;"
         >
         </div>
         <Image
+            id="hero-img"
             src={profileImage}
             alt="Eldho Eapen"
+            loading="eager"
             class="relative z-10 w-[90%] h-[90%] object-contain drop-shadow-2xl transition-transform duration-500 group-hover:scale-105 dark:brightness-90"
+            style="border-radius: 30% 70% 70% 30% / 30% 30% 70% 70%;"
         />
     </div>
 </section>

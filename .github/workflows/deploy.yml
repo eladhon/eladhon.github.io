@@ -16,6 +16,8 @@ jobs:
     steps:
       - name: Checkout your repository
         uses: actions/checkout@v6
+        with:
+          submodules: recursive
 
       - name: Install, build, and upload your site
         uses: withastro/action@v5

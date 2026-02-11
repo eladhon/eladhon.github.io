@@ -1,0 +1,59 @@
+---
+import ProjectCard from "./ProjectCard.astro";
+import { projects } from "../data/projects";
+
+interface Props {
+    limit?: number;
+    showViewAll?: boolean;
+}
+
+const { limit, showViewAll = false } = Astro.props;
+const displayedProjects = limit ? projects.slice(0, limit) : projects;
+---
+
+<section id="projects" class="pt-24 space-y-12">
+    <div class="flex items-center justify-between">
+        <h2
+            class="text-3xl font-bold text-gray-900 dark:text-white flex items-center gap-3"
+        >
+            <span class="text-primary-600 dark:text-primary-500">04.</span>
+            {limit ? "Popular Projects" : "All Projects"}
+        </h2>
+        <div
+            class="h-px bg-gray-200 dark:bg-dark-border flex-1 ml-6 hidden sm:block opacity-50"
+        >
+        </div>
+    </div>
+
+    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+        {displayedProjects.map((project) => <ProjectCard project={project} />)}
+    </div>
+
+    {
+        showViewAll && (
+            <div class="text-center pt-8">
+                <a
+                    href="/projects"
+                    class="inline-flex items-center gap-2 text-primary-600 dark:text-primary-400 hover:text-primary-800 dark:hover:text-primary-300 font-medium transition-colors group"
+                >
+                    View Full Project Archive
+                    <svg
+                        xmlns="http://www.w3.org/2000/svg"
+                        width="18"
+                        height="18"
+                        viewBox="0 0 24 24"
+                        fill="none"
+                        stroke="currentColor"
+                        stroke-width="2"
+                        stroke-linecap="round"
+                        stroke-linejoin="round"
+                        class="lucide lucide-arrow-right group-hover:translate-x-1 transition-transform"
+                    >
+                        <path d="M5 12h14" />
+                        <path d="m12 5 7 7-7 7" />
+                    </svg>
+                </a>
+            </div>
+        )
+    }
+</section>

@@ -5,7 +5,7 @@ import { projects } from "../data/projects";
 ---
 
 <Layout title="All Projects | Eldho Eapen">
-    <main class="mx-auto max-w-5xl px-6 pb-20 pt-32">
+    <div class="pt-32">
         <div class="mb-12">
             <a
                 href="/"
@@ -29,5 +29,5 @@ import { projects } from "../data/projects";
         <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
             {projects.map((project) => <ProjectCard project={project} />)}
         </div>
-    </main>
+    </div>
 </Layout>

@@ -27,9 +27,15 @@ const { project } = Astro.props;
         <div class="flex gap-3 text-gray-500 dark:text-gray-400 relative z-10">
             {
                 project.github && (
-                    <span class="hover:text-gray-900 dark:hover:text-white transition-colors">
+                    <a
+                        href={project.github}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        class="hover:text-gray-900 dark:hover:text-white transition-colors"
+                        aria-label={`View source code for ${project.title}`}
+                    >
                         <i class="fa-brands fa-github text-xl" />
-                    </span>
+                    </a>
                 )
             }
             {
@@ -39,6 +45,7 @@ const { project } = Astro.props;
                         target="_blank"
                         rel="noopener noreferrer"
                         class="hover:text-gray-900 dark:hover:text-white transition-colors"
+                        aria-label={`Visit live demo of ${project.title}`}
                     >
                         <i class="fa-solid fa-up-right-from-square text-lg" />
                     </a>

@@ -1,8 +1,15 @@
 ---
 import ThemeToggle from "./ThemeToggle.astro";
 
+interface Props {
+    blogTitle?: string;
+}
+
+const { blogTitle } = Astro.props;
 const { pathname } = Astro.url;
 const isHome = pathname === "/";
+const isBlog = pathname.startsWith("/blog");
+const isBlogPost = isBlog && pathname !== "/blog" && pathname !== "/blog/";
 
 const navItems = [
     { name: "About", href: "#about" },
@@ -26,19 +33,45 @@ const navItems = [
         >
             EE
         </a>
+        <a
+            href="/blog"
+            class:list={[
+                "px-3 py-2 rounded-full text-sm font-medium transition-all shrink-0",
+                isBlog
+                    ? "text-primary-600 dark:text-primary-400 bg-primary-500/10"
+                    : "text-gray-500 hover:text-gray-900 hover:bg-gray-100 dark:text-gray-400 dark:hover:text-white dark:hover:bg-white/5",
+            ]}
+        >
+            Blog
+        </a>
         <div class="w-px h-6 bg-gray-200 dark:bg-dark-border mx-1 shrink-0">
         </div>
         {
-            navItems.map((item) => (
-                <a
-                    href={isHome ? item.href : `/${item.href}`}
-                    class="nav-link relative px-4 py-2 rounded-full text-sm font-medium transition-all text-gray-500 hover:text-gray-900 hover:bg-gray-100 dark:text-gray-400 dark:hover:text-white dark:hover:bg-white/5 shrink-0 group"
-                    data-href={item.href}
-                >
-                    {item.name}
-                    <span class="absolute bottom-1.5 left-3 right-3 h-0.5 bg-primary-600 dark:bg-primary-400 scale-x-0 transition-transform origin-center group-[.active]:scale-x-100 rounded-full" />
-                </a>
-            ))
+            isBlog ? (
+                isBlogPost && blogTitle ? (
+                    <span
+                        class="px-4 py-2 text-sm font-medium text-gray-700 dark:text-gray-300 truncate max-w-[200px] sm:max-w-[300px]"
+                        title={blogTitle}
+                    >
+                        {blogTitle}
+                    </span>
+                ) : (
+                    <span class="px-4 py-2 text-sm font-medium text-gray-500 dark:text-gray-400">
+                        All Posts
+                    </span>
+                )
+            ) : (
+                navItems.map((item) => (
+                    <a
+                        href={isHome ? item.href : `/${item.href}`}
+                        class="nav-link relative px-4 py-2 rounded-full text-sm font-medium transition-all text-gray-500 hover:text-gray-900 hover:bg-gray-100 dark:text-gray-400 dark:hover:text-white dark:hover:bg-white/5 shrink-0 group"
+                        data-href={item.href}
+                    >
+                        {item.name}
+                        <span class="absolute bottom-1.5 left-3 right-3 h-0.5 bg-primary-600 dark:bg-primary-400 scale-x-0 transition-transform origin-center group-[.active]:scale-x-100 rounded-full" />
+                    </a>
+                ))
+            )
         }
         <div class="w-px h-6 bg-gray-200 dark:bg-dark-border mx-1 shrink-0">
         </div>
@@ -103,10 +136,6 @@ const navItems = [
         setActiveLink();
     } else {
         // If not home, check if we are on a page that matches a nav item (e.g. /projects)
-        // For now, this navbar pattern relies on sections on home.
-        // If on /projects, maybe highlight nothing or highlight "Projects" if desired?
-        // User asked for "indicator when selected".
-        // Let's assume if on /projects, we highlight "Projects"
         navLinks.forEach((link) => {
             if (
                 link.getAttribute("href") === "/#projects" &&
