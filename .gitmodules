@@ -1,0 +1,3 @@
+[submodule "src/content/my-blog"]
+	path = src/content/my-blog
+	url = https://github.com/eladhon/my-blog.git
