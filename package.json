@@ -11,8 +11,8 @@
   },
   "dependencies": {
     "@astrojs/rss": "^4.0.18",
+    "astro": "^7.2.9",
     "@tailwindcss/vite": "^4.2.4",
-    "astro": "^6.2.1",
     "tailwindcss": "^4.2.4"
   },
   "devDependencies": {

@@ -1,0 +1,136 @@
+---
+import { PROJECTS_DATA } from "../data/portfolioData";
+---
+
+{
+  PROJECTS_DATA.map((project) => (
+    <div
+      id={`project-modal-${project.id}`}
+      class="project-modal fixed inset-0 z-[70] hidden items-center justify-center bg-black/60 p-4 backdrop-blur-sm"
+      role="dialog"
+      aria-modal="true"
+      aria-labelledby={`project-modal-title-${project.id}`}
+      aria-describedby={`project-modal-description-${project.id}`}
+    >
+      <div class="relative max-h-[min(42rem,calc(100vh-2rem))] w-full max-w-2xl overflow-y-auto border border-black/20 bg-white p-6 shadow-2xl dark:border-white/20 dark:bg-[#0a0a0a] sm:p-8">
+        <button
+          type="button"
+          class="close-modal-btn absolute right-4 top-4 inline-flex h-9 w-9 items-center justify-center border border-black/15 text-zinc-600 transition-colors hover:border-black/40 hover:text-black dark:border-white/15 dark:text-zinc-300 dark:hover:border-white/40 dark:hover:text-white"
+          aria-label={`Close ${project.title} details`}
+        >
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="h-4 w-4" aria-hidden="true"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg>
+        </button>
+
+        <p class="mb-4 font-mono text-xs text-zinc-500 dark:text-zinc-400">
+          {project.filename}
+        </p>
+        <h2 id={`project-modal-title-${project.id}`} class="pr-10 text-2xl font-semibold tracking-tight text-black dark:text-white sm:text-3xl">
+          {project.title}
+        </h2>
+        <p id={`project-modal-description-${project.id}`} class="mt-4 text-sm leading-relaxed text-zinc-700 dark:text-zinc-300 sm:text-base">
+          {project.fullDetails}
+        </p>
+
+        {
+          project.metrics && project.metrics.length > 0 && (
+            <dl class="mt-6 grid grid-cols-1 border border-black/10 text-sm sm:grid-cols-3 dark:border-white/10">
+              {project.metrics.map((metric) => (
+                <div class="border-b border-black/10 p-3 last:border-b-0 sm:border-b-0 sm:border-r sm:last:border-r-0 dark:border-white/10">
+                  <dt class="font-mono text-[11px] uppercase tracking-wide text-zinc-500 dark:text-zinc-400">{metric.label}</dt>
+                  <dd class="mt-1 font-medium text-black dark:text-white">{metric.value}</dd>
+                </div>
+              ))}
+            </dl>
+          )
+        }
+
+        <div class="mt-6 flex flex-wrap gap-2">
+          {project.tags.map((tag) => (
+            <span class="border border-black/10 bg-gray-50 px-2.5 py-1 font-mono text-xs text-zinc-700 dark:border-white/10 dark:bg-[#050505] dark:text-zinc-300">
+              {tag}
+            </span>
+          ))}
+        </div>
+
+        <div class="mt-8 flex flex-wrap gap-3">
+          {
+            project.githubUrl && (
+              <a
+                href={project.githubUrl}
+                target="_blank"
+                rel="noopener noreferrer"
+                class="inline-flex items-center gap-2 border border-black bg-black px-4 py-2.5 text-sm font-medium text-white transition-colors hover:bg-zinc-800 dark:border-white dark:bg-white dark:text-black dark:hover:bg-zinc-200"
+              >
+                View source
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="h-4 w-4" aria-hidden="true"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1 2-2V8a2 2 0 0 1 2-2h6"></path><polyline points="15 3 21 3 21 9"></polyline><line x1="10" y1="14" x2="21" y2="3"></line></svg>
+              </a>
+            )
+          }
+          {
+            project.liveUrl && project.liveUrl !== project.githubUrl && (
+              <a
+                href={project.liveUrl}
+                target="_blank"
+                rel="noopener noreferrer"
+                class="inline-flex items-center gap-2 border border-black/20 bg-white px-4 py-2.5 text-sm font-medium text-black transition-colors hover:border-black/45 hover:bg-gray-50 dark:border-white/20 dark:bg-[#0a0a0a] dark:text-white dark:hover:border-white/45 dark:hover:bg-[#141414]"
+              >
+                Live demo
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="h-4 w-4" aria-hidden="true"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"></path><polyline points="15 3 21 3 21 9"></polyline><line x1="10" y1="14" x2="21" y2="3"></line></svg>
+              </a>
+            )
+          }
+        </div>
+      </div>
+    </div>
+  ))
+}
+
+<script>
+  const projectModals = document.querySelectorAll<HTMLElement>(".project-modal");
+  const closeButtons = document.querySelectorAll<HTMLButtonElement>(".close-modal-btn");
+  let activeModal: HTMLElement | null = null;
+  let lastTrigger: HTMLElement | null = null;
+
+  function closeModal(modal: HTMLElement | null) {
+    if (!modal) return;
+
+    modal.classList.add("hidden");
+    modal.classList.remove("flex");
+    document.body.style.overflow = "";
+    activeModal = null;
+    lastTrigger?.focus();
+    lastTrigger = null;
+  }
+
+  function openModal(modal: HTMLElement, trigger: HTMLElement | null) {
+    activeModal = modal;
+    lastTrigger = trigger;
+    modal.classList.remove("hidden");
+    modal.classList.add("flex");
+    document.body.style.overflow = "hidden";
+    modal.querySelector<HTMLButtonElement>(".close-modal-btn")?.focus();
+  }
+
+  window.addEventListener("open-project-modal", (event) => {
+    if (!(event instanceof CustomEvent) || typeof event.detail !== "string") return;
+
+    const modal = document.getElementById(`project-modal-${event.detail}`);
+    if (modal instanceof HTMLElement) {
+      openModal(modal, document.getElementById(`project-card-${event.detail}`));
+    }
+  });
+
+  closeButtons.forEach((button) => {
+    button.addEventListener("click", () => closeModal(button.closest<HTMLElement>(".project-modal")));
+  });
+
+  projectModals.forEach((modal) => {
+    modal.addEventListener("click", (event) => {
+      if (event.target === modal) closeModal(modal);
+    });
+  });
+
+  document.addEventListener("keydown", (event) => {
+    if (event.key === "Escape") closeModal(activeModal);
+  });
+</script>

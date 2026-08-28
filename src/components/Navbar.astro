@@ -1,148 +1,146 @@
 ---
 import ThemeToggle from "./ThemeToggle.astro";
 
-interface Props {
-    blogTitle?: string;
-}
-
-const { blogTitle } = Astro.props;
-const { pathname } = Astro.url;
-const isHome = pathname === "/";
-const isBlog = pathname.startsWith("/blog");
-const isBlogPost = isBlog && pathname !== "/blog" && pathname !== "/blog/";
-
-const navItems = [
-    { name: "About", href: "#about" },
-    { name: "Skills", href: "#skills" },
-    // { name: "Experience", href: "#experience" },
-    { name: "Education", href: "#education" },
-    { name: "Projects", href: "#projects" },
+const navLinks = [
+  { label: "Blog", href: "/blog" },
+  { label: "Skills", href: "/#skills" },
+  { label: "Education", href: "/#education" },
+  { label: "Experience", href: "/#experience" },
+  { label: "Projects", href: "/#projects" },
 ];
 ---
 
 <nav
-    class="fixed top-0 left-0 right-0 z-50 flex justify-center pt-6 px-6 pointer-events-none"
+  id="top-nav"
+  class="fixed inset-x-0 top-0 z-50 w-full border-b border-black/10 bg-white/90 backdrop-blur-md transition-all dark:border-white/10 dark:bg-[#000000]/90"
 >
-    <div
-        class="pointer-events-auto flex items-center justify-start sm:justify-center gap-1 rounded-full bg-white/80 dark:bg-dark-surface/80 border border-gray-200 dark:border-dark-border px-3 py-2 backdrop-blur-md shadow-lg shadow-black/5 dark:shadow-black/20 max-w-[90vw] overflow-x-auto no-scrollbar"
+  <div
+    class="flex justify-between items-center w-full px-4 sm:px-6 md:px-8 h-14 max-w-5xl mx-auto"
+  >
+    <!-- Brand -->
+    <a
+      id="brand-logo"
+      href="/"
+      class="flex items-center gap-2.5 text-base sm:text-lg text-black dark:text-white font-semibold tracking-tight hover:text-neutral-800 dark:hover:text-neutral-200 transition-colors group"
     >
-        <a
-            href="/"
-            class="px-4 py-2 rounded-full text-sm font-bold transition-all flex items-center text-primary-600 dark:text-primary-400 hover:bg-primary-500/10 shrink-0"
-            aria-label="Home"
-        >
-            EE
-        </a>
-        <a
-            href="/blog"
-            class:list={[
-                "px-3 py-2 rounded-full text-sm font-medium transition-all shrink-0",
-                isBlog
-                    ? "text-primary-600 dark:text-primary-400 bg-primary-500/10"
-                    : "text-gray-500 hover:text-gray-900 hover:bg-gray-100 dark:text-gray-400 dark:hover:text-white dark:hover:bg-white/5",
-            ]}
-        >
-            Blog
-        </a>
-        <div class="w-px h-6 bg-gray-200 dark:bg-dark-border mx-1 shrink-0">
-        </div>
+      <span
+        class="w-6 h-6 bg-black dark:bg-white inline-block transition-colors [mask-image:url(/favicon.svg)] [mask-size:contain] [mask-repeat:no-repeat] [mask-position:center]"
+        aria-label="Brand"></span>
+      <span
+        class="font-mono text-sm sm:text-base font-medium text-black dark:text-white tracking-tight"
+        >Eldho_Eapen</span
+      >
+    </a>
+
+    <!-- Desktop Navigation Links -->
+    <div id="nav-links-bar" class="flex items-center gap-4 sm:gap-6 md:gap-8">
+      <div class="hidden sm:flex items-center gap-4 sm:gap-6 md:gap-8">
         {
-            isBlog ? (
-                isBlogPost && blogTitle ? (
-                    <span
-                        class="px-4 py-2 text-sm font-medium text-gray-700 dark:text-gray-300 truncate max-w-[200px] sm:max-w-[300px]"
-                        title={blogTitle}
-                    >
-                        {blogTitle}
-                    </span>
-                ) : (
-                    <span class="px-4 py-2 text-sm font-medium text-gray-500 dark:text-gray-400">
-                        All Posts
-                    </span>
-                )
-            ) : (
-                navItems.map((item) => (
-                    <a
-                        href={isHome ? item.href : `/${item.href}`}
-                        class="nav-link relative px-4 py-2 rounded-full text-sm font-medium transition-all text-gray-500 hover:text-gray-900 hover:bg-gray-100 dark:text-gray-400 dark:hover:text-white dark:hover:bg-white/5 shrink-0 group"
-                        data-href={item.href}
-                    >
-                        {item.name}
-                        <span class="absolute bottom-1.5 left-3 right-3 h-0.5 bg-primary-600 dark:bg-primary-400 scale-x-0 transition-transform origin-center group-[.active]:scale-x-100 rounded-full" />
-                    </a>
-                ))
-            )
+          navLinks.map((link) => (
+            <a
+              id={`nav-link-${link.label.toLowerCase()}`}
+              href={link.href}
+              class="text-zinc-600 dark:text-zinc-400 hover:text-black dark:hover:text-white transition-colors text-xs sm:text-sm font-mono tracking-tight"
+            >
+              {link.label}
+            </a>
+          ))
         }
-        <div class="w-px h-6 bg-gray-200 dark:bg-dark-border mx-1 shrink-0">
-        </div>
-        <div class="shrink-0">
-            <ThemeToggle />
-        </div>
+      </div>
+      <ThemeToggle />
+
+      <!-- Mobile Menu Button -->
+      <button
+        id="mobile-menu-btn"
+        class="sm:hidden p-1.5 text-black dark:text-white hover:bg-gray-100 dark:hover:bg-white/10 rounded-md transition-colors cursor-pointer"
+        aria-label="Toggle menu"
+      >
+        <svg
+          id="menu-icon-open"
+          xmlns="http://www.w3.org/2000/svg"
+          width="20"
+          height="20"
+          viewBox="0 0 24 24"
+          fill="none"
+          stroke="currentColor"
+          stroke-width="2"
+          stroke-linecap="round"
+          stroke-linejoin="round"
+          ><line x1="3" y1="12" x2="21" y2="12"></line><line
+            x1="3"
+            y1="6"
+            x2="21"
+            y2="6"></line><line x1="3" y1="18" x2="21" y2="18"></line></svg
+        >
+        <svg
+          id="menu-icon-close"
+          xmlns="http://www.w3.org/2000/svg"
+          width="20"
+          height="20"
+          viewBox="0 0 24 24"
+          fill="none"
+          stroke="currentColor"
+          stroke-width="2"
+          stroke-linecap="round"
+          stroke-linejoin="round"
+          class="hidden"
+          ><line x1="18" y1="6" x2="6" y2="18"></line><line
+            x1="6"
+            y1="6"
+            x2="18"
+            y2="18"></line></svg
+        >
+      </button>
     </div>
+  </div>
+
+  <!-- Mobile Menu Dropdown -->
+  <div
+    id="mobile-menu"
+    class="hidden sm:hidden bg-white dark:bg-[#000000] border-b border-black/10 dark:border-white/10 absolute w-full left-0 top-14 shadow-lg shadow-black/5 dark:shadow-white/5"
+  >
+    <div class="flex flex-col px-4 py-4 space-y-4">
+      {
+        navLinks.map((link) => (
+          <a
+            href={link.href}
+            class="mobile-nav-link text-zinc-600 dark:text-zinc-400 hover:text-black dark:hover:text-white transition-colors text-sm font-mono tracking-tight"
+          >
+            {link.label}
+          </a>
+        ))
+      }
+    </div>
+  </div>
 </nav>
 
-<style>
-    .no-scrollbar::-webkit-scrollbar {
-        display: none;
-    }
-    .no-scrollbar {
-        -ms-overflow-style: none;
-        scrollbar-width: none;
-    }
-</style>
-
 <script>
-    const navLinks = document.querySelectorAll(".nav-link");
+  const mobileMenuBtn = document.getElementById("mobile-menu-btn");
+  const mobileMenu = document.getElementById("mobile-menu");
+  const iconOpen = document.getElementById("menu-icon-open");
+  const iconClose = document.getElementById("menu-icon-close");
+  const mobileNavLinks = document.querySelectorAll(".mobile-nav-link");
 
-    // Function to set active link based on current section
-    const setActiveLink = () => {
-        const sections = document.querySelectorAll("section");
-        let currentSection = "";
+  if (mobileMenuBtn && mobileMenu && iconOpen && iconClose) {
+    mobileMenuBtn.addEventListener("click", () => {
+      const isExpanded = !mobileMenu.classList.contains("hidden");
+      if (isExpanded) {
+        mobileMenu.classList.add("hidden");
+        iconOpen.classList.remove("hidden");
+        iconClose.classList.add("hidden");
+      } else {
+        mobileMenu.classList.remove("hidden");
+        iconOpen.classList.add("hidden");
+        iconClose.classList.remove("hidden");
+      }
+    });
 
-        sections.forEach((section) => {
-            const sectionTop = section.offsetTop;
-            const sectionHeight = section.clientHeight;
-            if (window.scrollY >= sectionTop - 150) {
-                currentSection = section.getAttribute("id") || "";
-            }
-        });
-
-        // Special handling for being at the bottom of the page
-        if (
-            window.innerHeight + window.scrollY >=
-            document.body.offsetHeight - 50
-        ) {
-            // Find the last section
-            const lastSection = sections[sections.length - 1];
-            if (lastSection) {
-                currentSection = lastSection.getAttribute("id") || "";
-            }
-        }
-
-        navLinks.forEach((link) => {
-            link.classList.remove("active");
-            if (
-                link.getAttribute("data-href") === `#${currentSection}` &&
-                window.location.pathname === "/"
-            ) {
-                link.classList.add("active");
-            }
-        });
-    };
-
-    // Initial check
-    if (window.location.pathname === "/") {
-        window.addEventListener("scroll", setActiveLink);
-        setActiveLink();
-    } else {
-        // If not home, check if we are on a page that matches a nav item (e.g. /projects)
-        navLinks.forEach((link) => {
-            if (
-                link.getAttribute("href") === "/#projects" &&
-                window.location.pathname.includes("projects")
-            ) {
-                link.classList.add("active");
-            }
-        });
-    }
+    mobileNavLinks.forEach((link) => {
+      link.addEventListener("click", () => {
+        mobileMenu.classList.add("hidden");
+        iconOpen.classList.remove("hidden");
+        iconClose.classList.add("hidden");
+      });
+    });
+  }
 </script>

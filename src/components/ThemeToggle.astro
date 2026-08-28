@@ -5,14 +5,28 @@
 <button
     id="theme-toggle"
     type="button"
-    class="inline-flex items-center justify-center rounded-full w-9 h-9 text-gray-500 hover:bg-gray-100 dark:text-gray-400 dark:hover:bg-gray-800 transition-colors focus:outline-none focus:ring-2 focus:ring-primary-500"
+    class="inline-flex items-center justify-center w-9 h-9 bg-transparent border border-zinc-200 dark:border-white/15 hover:border-zinc-400 dark:hover:border-white/40 text-zinc-500 dark:text-zinc-400 hover:text-zinc-900 dark:hover:text-white transition-colors cursor-pointer"
     aria-label="Toggle theme"
 >
-    <span id="theme-toggle-dark-icon" class="hidden">
-        <i class="fa-solid fa-moon text-lg"></i>
-    </span>
+    <!-- Sun icon (shown in dark mode — click to go light) -->
     <span id="theme-toggle-light-icon" class="hidden">
-        <i class="fa-solid fa-sun text-lg"></i>
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="w-4 h-4">
+            <circle cx="12" cy="12" r="5"></circle>
+            <line x1="12" y1="1" x2="12" y2="3"></line>
+            <line x1="12" y1="21" x2="12" y2="23"></line>
+            <line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line>
+            <line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line>
+            <line x1="1" y1="12" x2="3" y2="12"></line>
+            <line x1="21" y1="12" x2="23" y2="12"></line>
+            <line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line>
+            <line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line>
+        </svg>
+    </span>
+    <!-- Moon icon (shown in light mode — click to go dark) -->
+    <span id="theme-toggle-dark-icon" class="hidden">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="w-4 h-4">
+            <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path>
+        </svg>
     </span>
 </button>
 
@@ -25,7 +39,7 @@
     );
     const themeToggleBtn = document.getElementById("theme-toggle");
 
-    // Change the icons inside the button based on previous settings
+    // Show appropriate icon based on current theme
     if (
         localStorage.getItem("color-theme") === "dark" ||
         (!("color-theme" in localStorage) &&
