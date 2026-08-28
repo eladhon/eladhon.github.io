@@ -1,0 +1,83 @@
+---
+import Layout from "../../layouts/Layout.astro";
+import { getCollection } from "astro:content";
+
+const posts = await getCollection("my-blog", ({ data }) => !data.draft);
+
+// Sort by date descending
+posts.sort((a, b) => b.data.date.valueOf() - a.data.date.valueOf());
+
+const formatDate = (date: Date) => {
+    return date.toLocaleDateString("en-US", {
+        year: "numeric",
+        month: "long",
+        day: "numeric",
+    });
+};
+---
+
+<Layout
+    title="Blog | Eldho Eapen"
+    description="My thoughts, tutorials, and notes"
+>
+    <div class="w-full max-w-5xl mx-auto px-4 py-16 sm:px-6 sm:py-24">
+        <div class="mb-12">
+            <a
+                href="/"
+                class="inline-flex items-center gap-2 text-black dark:text-white hover:text-neutral-800 dark:hover:text-neutral-300 font-medium transition-colors mb-6 group"
+            >
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="h-4 w-4 transition-transform group-hover:-translate-x-1" aria-hidden="true"><line x1="19" y1="12" x2="5" y2="12"></line><polyline points="12 19 5 12 12 5"></polyline></svg>
+                Back to Home
+            </a>
+            <h1
+                class="text-4xl md:text-5xl font-bold text-black dark:text-white mb-4 tracking-tight"
+            >
+                Blog
+            </h1>
+            <p class="text-zinc-600 dark:text-zinc-400 text-lg">
+                My thoughts, tutorials, and notes.
+            </p>
+        </div>
+
+        {
+            posts.length === 0 ? (
+                <div class="text-center py-16">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" class="mx-auto mb-4 h-10 w-10 text-zinc-300 dark:text-zinc-700" aria-hidden="true"><path d="m14.5 4.5 5 5"></path><path d="m3 21 3.5-1 12-12a2.12 2.12 0 0 0-3-3l-12 12z"></path><path d="m12 5 5 5"></path></svg>
+                    <p class="text-gray-500 dark:text-gray-400">
+                        No posts yet. Check back soon!
+                    </p>
+                </div>
+            ) : (
+                <div class="space-y-6">
+                    {posts.map((post) => (
+                        <a href={`/blog/${post.id}`} class="block group">
+                            <article class="p-6 bg-white dark:bg-[#0a0a0a] border border-black/10 dark:border-white/10 hover:border-black/30 dark:hover:border-white/30 transition-all duration-300 interactive-card">
+                                <div class="flex flex-col md:flex-row md:items-center md:justify-between gap-2 mb-3">
+                                    <h2 class="text-xl font-semibold text-black dark:text-white group-hover:text-neutral-800 dark:group-hover:text-neutral-200 transition-colors">
+                                        {post.data.title}
+                                    </h2>
+                                    <time class="text-sm font-mono text-zinc-500 dark:text-zinc-400 shrink-0">
+                                        {formatDate(post.data.date)}
+                                    </time>
+                                </div>
+                                <p class="text-zinc-600 dark:text-zinc-400 mb-4 line-clamp-2">
+                                    {post.data.description}
+                                </p>
+                                {post.data.tags &&
+                                    post.data.tags.length > 0 && (
+                                        <div class="flex flex-wrap gap-2">
+                                            {post.data.tags.map((tag) => (
+                                                <span class="px-2.5 py-1 text-xs font-mono bg-gray-50 dark:bg-[#050505] border border-black/10 dark:border-white/10 text-zinc-700 dark:text-zinc-300">
+                                                    {tag}
+                                                </span>
+                                            ))}
+                                        </div>
+                                    )}
+                            </article>
+                        </a>
+                    ))}
+                </div>
+            )
+        }
+    </div>
+</Layout>
