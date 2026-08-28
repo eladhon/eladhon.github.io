@@ -3,7 +3,7 @@ export interface SkillCategory {
   title: string;
   icon: string;
   description: string;
-  technologies: { name: string; proficiency: number; experience: string }[];
+  technologies: { name: string; experience: string }[];
 }
 
 export interface EducationItem {

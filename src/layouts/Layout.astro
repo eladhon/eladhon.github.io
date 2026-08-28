@@ -2,7 +2,6 @@
 interface Props {
 	title: string;
 	description?: string;
-	blogTitle?: string;
 }
 
 import Navbar from "../components/Navbar.astro";
@@ -68,12 +67,12 @@ const { title, description = "Software Engineer Portfolio" } = Astro.props;
 		<Modals />
 
 		<script>
-			// Glow effect logic
-			document.addEventListener("mousemove", (e) => {
-				const glow = document.getElementById("glow-background");
+			const glow = document.getElementById("glow-background");
+
+			document.addEventListener("mousemove", (event) => {
 				if (glow) {
-					glow.style.left = `${e.clientX}px`;
-					glow.style.top = `${e.clientY}px`;
+					glow.style.left = `${event.clientX}px`;
+					glow.style.top = `${event.clientY}px`;
 				}
 			});
 		</script>
