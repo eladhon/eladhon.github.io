@@ -1,17 +1,16 @@
 ---
-import "../styles/global.css";
 import Layout from "../layouts/Layout.astro";
 import Hero from "../components/Hero.astro";
 import Skills from "../components/Skills.astro";
-// import Experience from "../components/Experience.astro"; Doesn't need now
 import Education from "../components/Education.astro";
+import Experience from "../components/Experience.astro";
 import Projects from "../components/Projects.astro";
 ---
 
 <Layout title="Eldho Eapen | Portfolio">
-	<Hero />
-	<Skills />
-	<!-- <Experience />  -->
-	<Education />
-	<Projects limit={3} showViewAll={true} />
+  <Hero />
+  <Skills />
+  <Education />
+  <Experience />
+  <Projects />
 </Layout>

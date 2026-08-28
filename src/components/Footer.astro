@@ -1,44 +1,107 @@
 ---
+import { PERSONAL_INFO } from "../data/portfolioData";
 
+const currentYear = new Date().getFullYear();
 ---
 
 <footer
-    class="mt-32 pt-12 pb-8 border-t border-gray-200 dark:border-dark-border"
+  id="main-footer"
+  class="bg-white dark:bg-[#000000] border-t border-black/10 dark:border-white/10 relative z-20 py-8 px-4 sm:px-6"
 >
-    <div class="flex flex-col items-center gap-4 text-center">
-        <!-- Made with Love -->
-        <div
-            class="flex items-center gap-2 text-gray-600 dark:text-gray-400 font-medium"
-        >
-            <span>Made with</span>
-            <i class="fa-solid fa-heart text-red-500 animate-pulse"></i>
-            <span>by Eldho Eapen</span>
-        </div>
-
-        <!-- Links -->
-        <div class="flex items-center gap-6 text-sm">
-            <a
-                href="https://github.com/eladhon/eladhon.github.io/"
-                target="_blank"
-                rel="noopener noreferrer"
-                class="flex items-center gap-2 text-gray-500 hover:text-gray-900 dark:text-gray-400 dark:hover:text-white transition-colors duration-200"
-            >
-                <i class="fa-brands fa-github text-lg"></i>
-                <span>Source Code</span>
-            </a>
-            <span class="text-gray-300 dark:text-gray-700">|</span>
-            <a
-                href="/rss.xml"
-                class="flex items-center gap-2 text-gray-500 hover:text-orange-600 dark:text-gray-400 dark:hover:text-orange-400 transition-colors duration-200"
-            >
-                <i class="fa-solid fa-rss text-lg"></i>
-                <span>RSS Feed</span>
-            </a>
-        </div>
-
-        <!-- Copyright -->
-        <p class="text-gray-400 dark:text-gray-600 text-xs mt-4">
-            &copy; {new Date().getFullYear()} Eldho Eapen. Built with Astro & TailwindCSS.
-        </p>
+  <div
+    class="flex flex-col md:flex-row justify-between items-center w-full max-w-5xl mx-auto gap-4"
+  >
+    <!-- Copyright notice -->
+    <div
+      class="font-mono text-xs text-zinc-600 dark:text-zinc-500 text-center md:text-left"
+    >
+      © {currentYear}{" "}{PERSONAL_INFO.name} - Portfolio
     </div>
+
+    <!-- Quick Links -->
+    <div class="flex flex-wrap justify-center items-center gap-4 sm:gap-6">
+      <a
+        id="footer-github-link"
+        href={PERSONAL_INFO.github}
+        target="_blank"
+        rel="noopener noreferrer"
+        class="text-zinc-600 dark:text-zinc-400 hover:text-black dark:hover:text-white transition-colors font-mono text-xs flex items-center gap-1.5"
+      >
+        <svg
+          viewBox="0 0 24 24"
+          fill="none"
+          stroke="currentColor"
+          stroke-width="2"
+          stroke-linecap="round"
+          stroke-linejoin="round"
+          class="w-3.5 h-3.5 text-zinc-500 dark:text-zinc-400"
+          ><polyline points="16 18 22 12 16 6"></polyline><polyline
+            points="8 6 2 12 8 18"></polyline></svg
+        >
+        <span>GitHub</span>
+      </a>
+
+      <a
+        id="footer-linkedin-link"
+        href={PERSONAL_INFO.linkedin}
+        target="_blank"
+        rel="noopener noreferrer"
+        class="text-zinc-600 dark:text-zinc-400 hover:text-black dark:hover:text-white transition-colors font-mono text-xs flex items-center gap-1.5"
+      >
+        <svg
+          viewBox="0 0 24 24"
+          fill="none"
+          stroke="currentColor"
+          stroke-width="2"
+          stroke-linecap="round"
+          stroke-linejoin="round"
+          class="w-3.5 h-3.5 text-zinc-500 dark:text-zinc-400"
+          ><rect x="2" y="7" width="20" height="14" rx="2" ry="2"></rect><path
+            d="M16 21V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v16"></path></svg
+        >
+        <span>LinkedIn</span>
+      </a>
+
+      <a
+        id="footer-source-link"
+        href="https://github.com/eladhon/eladhon.github.io/"
+        target="_blank"
+        rel="noopener noreferrer"
+        class="text-zinc-600 dark:text-zinc-400 hover:text-black dark:hover:text-white transition-colors font-mono text-xs flex items-center gap-1.5"
+      >
+        <svg
+          viewBox="0 0 24 24"
+          fill="none"
+          stroke="currentColor"
+          stroke-width="2"
+          stroke-linecap="round"
+          stroke-linejoin="round"
+          class="w-3.5 h-3.5 text-zinc-500 dark:text-zinc-400"
+          ><path
+            d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37 0 0 0-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0 0 20 4.77 5.07 5.07 0 0 0 19.91 1S18.73.65 16 2.48a13.38 13.38 0 0 0-7 0C6.27.65 5.09 1 5.09 1A5.07 5.07 0 0 0 5 4.77a5.44 5.44 0 0 0-1.5 3.78c0 5.42 3.3 6.61 6.44 7A3.37 3.37 0 0 0 9 18.13V22"
+          ></path></svg
+        >
+        <span>Source Code</span>
+      </a>
+
+      <a
+        id="footer-rss-link"
+        href="/rss.xml"
+        class="text-zinc-600 dark:text-zinc-400 hover:text-black dark:hover:text-white transition-colors font-mono text-xs flex items-center gap-1.5"
+      >
+        <svg
+          viewBox="0 0 24 24"
+          fill="none"
+          stroke="currentColor"
+          stroke-width="2"
+          stroke-linecap="round"
+          stroke-linejoin="round"
+          class="w-3.5 h-3.5 text-zinc-500 dark:text-zinc-400"
+          ><path d="M4 11a9 9 0 0 1 9 9"></path><path d="M4 4a16 16 0 0 1 16 16"
+          ></path><circle cx="5" cy="19" r="1"></circle></svg
+        >
+        <span>RSS Feed</span>
+      </a>
+    </div>
+  </div>
 </footer>

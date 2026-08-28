@@ -1,33 +1,26 @@
 ---
-import Layout from "../layouts/Layout.astro";
 import ProjectCard from "../components/ProjectCard.astro";
-import { projects } from "../data/projects";
+import { PROJECTS_DATA } from "../data/portfolioData";
+import Layout from "../layouts/Layout.astro";
 ---
 
 <Layout title="All Projects | Eldho Eapen">
-    <div class="pt-32">
-        <div class="mb-12">
-            <a
-                href="/"
-                class="inline-flex items-center gap-2 text-primary-600 dark:text-primary-400 hover:text-primary-800 dark:hover:text-primary-300 font-medium transition-colors mb-6 group"
-            >
-                <i
-                    class="fa-solid fa-arrow-left group-hover:-translate-x-1 transition-transform"
-                ></i>
-                Back to Home
-            </a>
-            <h1
-                class="text-4xl md:text-5xl font-bold text-gray-900 dark:text-white mb-4"
-            >
-                All Projects
-            </h1>
-            <p class="text-gray-600 dark:text-gray-400 text-lg">
-                A big list of things I've worked on.
-            </p>
-        </div>
+  <section class="mx-auto mb-24 w-full max-w-5xl px-4 pt-8 sm:mb-32 sm:px-6">
+    <a href="/" class="group mb-10 inline-flex items-center gap-2 font-mono text-xs text-zinc-500 transition-colors hover:text-black dark:hover:text-white">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="h-3.5 w-3.5 transition-transform group-hover:-translate-x-0.5" aria-hidden="true"><line x1="19" y1="12" x2="5" y2="12"></line><polyline points="12 19 5 12 12 5"></polyline></svg>
+      Back to home
+    </a>
 
-        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-            {projects.map((project) => <ProjectCard project={project} />)}
-        </div>
+    <div class="mb-8 flex items-end justify-between border-b border-black/10 pb-4 dark:border-white/10">
+      <div>
+        <h1 class="text-2xl font-semibold tracking-tight text-black dark:text-white sm:text-3xl">All Projects</h1>
+        <p class="mt-1 text-xs text-zinc-500 dark:text-zinc-400 sm:text-sm">A full list of things I’ve worked on.</p>
+      </div>
+      <span class="font-mono text-xs font-medium text-zinc-500 sm:text-sm">/projects</span>
     </div>
+
+    <div class="grid grid-cols-1 gap-6 md:grid-cols-2 lg:grid-cols-3">
+      {PROJECTS_DATA.map((project) => <ProjectCard project={project} />)}
+    </div>
+  </section>
 </Layout>

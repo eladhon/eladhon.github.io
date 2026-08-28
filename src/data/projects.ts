@@ -18,8 +18,8 @@ export const projects: Project[] = [
     {
         title: "Medicare",
         description: "Built a web-based platform for searching and verifying medicine details including composition and side effects by consuming public health APIs. Focused on clean UI and accurate data presentation.",
-        tech: ["HTML", "CSS", "JavaScript", "OpenFDA API"],
-        link: "https://github.com/eladhon/medicare",
+        tech: ["HTML", "CSS", "JavaScript", "OpenFDA API", "RxNorm API"],
+        link: "https://eladhon.github.io/medicare/",
         github: "https://github.com/eladhon/medicare"
     },
 ];
