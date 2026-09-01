@@ -2,11 +2,11 @@ name: Deploy to GitHub Pages
 
 on:
   push:
-      branches: [ main ]
-        workflow_run:
-            workflows: ["Sync portfolio data"]
-                types:
-                      - completed
+    branches: [ main ]
+  workflow_run:
+    workflows: ["Sync portfolio data"]
+      types:
+        - completed
 
 permissions:
   contents: read
