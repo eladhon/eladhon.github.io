@@ -4,9 +4,10 @@ on:
   push:
     branches: [ main ]
   workflow_run:
-    workflows: ["Sync portfolio data"]
-      types:
-        - completed
+    workflows:
+      - Sync portfolio data
+    types:
+      - completed
 
 permissions:
   contents: read
