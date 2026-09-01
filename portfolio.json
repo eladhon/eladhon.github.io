@@ -1,5 +1,13 @@
 [
   {
+    "name": "stunning-broccoli",
+    "description": "hi, this is to check if my portfolio website can read this repository",
+    "language": null,
+    "url": "https://github.com/eladhon/stunning-broccoli",
+    "stars": 0,
+    "forks": 0
+  },
+  {
     "name": "eladhon.github.io",
     "description": "My Portfolio Website",
     "language": "Astro",
